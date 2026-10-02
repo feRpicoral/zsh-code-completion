@@ -1,0 +1,420 @@
+#compdef code
+
+# Generated from the help output of Visual Studio Code 1.140.0.
+
+_code_node() {
+  subs=() opts=() args=()
+  case $1 in
+    '')
+      subs=(
+        'chat:Pass in a prompt to run in a chat session in the current working directory.'
+        'serve-web:Run a server that displays the editor UI in browsers.'
+        'agent:Start and interact with AI agent hosts.'
+        'tunnel:Make the current machine accessible from vscode.dev or other machines through a secure tunnel.'
+      )
+      opts=(
+        '(-d --diff)'{-d=,--diff=}'[Compare two files with each other.]:file:_files:file:_files'
+        '(-m --merge)'{-m=,--merge=}'[Perform a three-way merge by providing paths for two modified versions of a file, the common origin of both modified...]:path1:_files:path2:_files:base:_files:result:_files'
+        '*'{-a=,--add=}'[Add folder(s) to the last active window.]:folder:_files -/'
+        '*--remove=[Remove folder(s) from the last active window.]:folder:_files -/'
+        '(-g --goto)'{-g=,--goto=}'[Open a file at the path on the specified line and character position.]:file\:line[\:character]:_files'
+        '(-n --new-window)'{-n,--new-window}'[Force to open a new window.]'
+        '(-r --reuse-window)'{-r,--reuse-window}'[Force to open a file or folder in an already opened window.]'
+        '--agents[Opens the agents window.]'
+        '(-w --wait)'{-w,--wait}'[Wait for the files to be closed before returning.]'
+        '--locale=[The locale to use (e.g. en-US or zh-TW).]:locale: '
+        '--user-data-dir=[Specifies the directory that user data is kept in. Can be used to open multiple distinct instances of Code.]:dir:_files -/'
+        '--profile=[Opens the provided folder or workspace with the given profile and associates the profile with the workspace.]:profileName: '
+        '(-h --help)'{-h,--help}'[Print usage.]'
+        '--extensions-dir=[Set the root path for extensions.]:dir:_files -/'
+        '--list-extensions[List the installed extensions.]'
+        '--show-versions[Show versions of installed extensions, when using --list-extensions.]'
+        '--category=[Filters installed extensions by provided category, when using --list-extensions.]:category: '
+        '--install-extension=[Installs or updates an extension.]:ext-id | path:_files -g "*.vsix(-.)"'
+        '--pre-release[Installs the pre-release version of the extension, when using --install-extension]'
+        '--uninstall-extension=[Uninstalls an extension.]:ext-id:_code_extensions'
+        '--update-extensions[Update the installed extensions.]'
+        '*--enable-proposed-api=[Enables proposed API features for extensions. Can receive one or more extension IDs to enable individually.]:ext-id:_code_extensions'
+        '--add-mcp=[Adds a Model Context Protocol server definition to the user profile.]:json: '
+        '(-v --version)'{-v,--version}'[Print version.]'
+        '--verbose[Print verbose output (implies --wait).]'
+        '*--log=[Log level to use. Default is '\''info'\''.]:level:(info critical error warn debug trace off)'
+        '(-s --status)'{-s,--status}'[Print process usage and diagnostics information.]'
+        '--prof-startup[Run CPU profiler during startup.]'
+        '--disable-extensions[Disable all installed extensions.]'
+        '--disable-extension=[Disable the provided extension. This option is not persisted and is effective only when the command opens a new window.]:ext-id:_code_extensions'
+        '--sync=[Turn sync on or off.]:on | off:(on off)'
+        '--inspect-extensions=[Allow debugging and profiling of extensions. Check the developer tools for the connection URI.]:port: '
+        '--inspect-brk-extensions=[Allow debugging and profiling of extensions with the extension host being paused after start.]:port: '
+        '--disable-lcd-text[Disable LCD font rendering.]'
+        '--disable-gpu[Disable GPU hardware acceleration.]'
+        '--disable-chromium-sandbox[Use this option only when there is requirement to launch the application as sudo user on Linux or when running as an...]'
+        '--locate-shell-integration-path=[Print the path to a terminal shell integration script. Allowed values are '\''bash'\'', '\''pwsh'\'', '\''zsh'\'' or '\''fish'\''.]:shell:(bash pwsh zsh fish)'
+        '--telemetry[Shows all telemetry events which VS code collects.]'
+        '--transient[Run with temporary data and extension directories, as if launched for the first time.]'
+      )
+      args=('*: :->command')
+      ;;
+    'chat')
+      opts=(
+        '(-m --mode)'{-m=,--mode=}'[The mode to use for the chat session.]:mode:(ask edit agent)'
+        '(-a --add-file)'{-a=,--add-file=}'[Add files as context to the chat session.]:path:_files'
+        '--maximize[Maximize the chat session view.]'
+        '(-r --reuse-window)'{-r,--reuse-window}'[Force to use the last active window for the chat session.]'
+        '(-n --new-window)'{-n,--new-window}'[Force to open an empty window for the chat session.]'
+        '--profile=[Opens the provided folder or workspace with the given profile and associates the profile with the workspace.]:profileName: '
+      )
+      args=('::prompt: ')
+      ;;
+    'serve-web')
+      opts=(
+        '--host=[Host to listen on, defaults to '\''localhost'\'']:host: '
+        '--socket-path=:socket_path: '
+        '--port=[Port to listen on. If 0 is passed a random free port is picked [default: 8000\]]:port: '
+        '--connection-token=[A secret that must be included with all requests]:connection_token: '
+        '--connection-token-file=[A file containing a secret that must be included with all requests]:connection_token_file:_files'
+        '--without-connection-token[Run without a connection token. Only use this if the connection is secured by other means]'
+        '--accept-server-license-terms[If set, the user accepts the server license terms and the server will be started without a user prompt]'
+        '--server-base-path=[Specifies the path under which the web UI and the code server is provided]:server_base_path: '
+        '--server-data-dir=[Specifies the directory that server data is kept in]:server_data_dir:_files -/'
+        '--default-folder=[The workspace folder to open when no input is specified in the browser URL]:default_folder:_files -/'
+        '--default-workspace=[The workspace to open when no input is specified in the browser URL]:default_workspace: '
+        '--disable-telemetry[Disables telemetry]'
+        '--commit-id=[Use a specific commit SHA for the client]:commit_id: '
+        '(-h --help)'{-h,--help}'[Print help]'
+        '--cli-data-dir=[Directory where CLI metadata should be stored]:cli_data_dir:_files -/'
+        '--verbose[Print verbose output (implies --wait)]'
+        '--log=[Log level to use]:level:(trace debug info warn error critical off)'
+      )
+      ;;
+    'agent')
+      subs=(
+        'host:Start a local agent host server'
+        'ps:List active sessions on a running agent host'
+        'stop:Cancel the active turn of a session'
+        'kill:Forcefully kill the running agent host process tree'
+        'logs:Stream live session events'
+        'endpoints:Print every live agent host endpoint as a single JSON document.'
+        'help:Print this message or the help of the given subcommand(s)'
+      )
+      opts=(
+        '--host=[Host the agent host should bind on.]:host: '
+        '--port=[Port the agent host should bind on.]:port: '
+        '--connection-token=[A secret that must be included with all requests]:connection_token: '
+        '--connection-token-file=[A file containing a secret that must be included with all requests]:connection_token_file:_files'
+        '--without-connection-token[Run without a connection token. Only use this if the connection is secured by other means]'
+        '--server-data-dir=[Specifies the directory that server data is kept in]:server_data_dir:_files -/'
+        '--user-data-dir=[Overrides the resolved user data directory used to home the local agent-host endpoint registry...]:user_data_dir:_files -/'
+        '--replace[Stop any agent host already running on this machine and start a fresh one.]'
+        '--new-instance[Always start a brand new standalone supervisor, even if one is already registered and would normally be reused.]'
+        '--foreground[Run a newly started agent host supervisor in the foreground instead of detaching it, keeping its logs attached to this...]'
+        '--tunnel[Expose the agent host over a dev tunnel]'
+        '--name=[Sets the machine name for the tunnel]:name: '
+        '--random-name[Randomly name the machine for the tunnel]'
+        '--idle-timeout=[Automatically terminate this supervisor once no client has been connected for this many seconds.]:idle_timeout: '
+        '(-h --help)'{-h,--help}'[Print help]'
+        '--cli-data-dir=[Directory where CLI metadata should be stored]:cli_data_dir:_files -/'
+        '--verbose[Print verbose output (implies --wait)]'
+        '--log=[Log level to use]:level:(trace debug info warn error critical off)'
+      )
+      args=(': :->command')
+      ;;
+    'agent host')
+      opts=(
+        '--host=[Host the agent host should bind on.]:host: '
+        '--port=[Port the agent host should bind on.]:port: '
+        '--connection-token=[A secret that must be included with all requests]:connection_token: '
+        '--connection-token-file=[A file containing a secret that must be included with all requests]:connection_token_file:_files'
+        '--without-connection-token[Run without a connection token. Only use this if the connection is secured by other means]'
+        '--server-data-dir=[Specifies the directory that server data is kept in]:server_data_dir:_files -/'
+        '--user-data-dir=[Overrides the resolved user data directory used to home the local agent-host endpoint registry...]:user_data_dir:_files -/'
+        '--replace[Stop any agent host already running on this machine and start a fresh one.]'
+        '--new-instance[Always start a brand new standalone supervisor, even if one is already registered and would normally be reused.]'
+        '--foreground[Run a newly started agent host supervisor in the foreground instead of detaching it, keeping its logs attached to this...]'
+        '--tunnel[Expose the agent host over a dev tunnel]'
+        '--name=[Sets the machine name for the tunnel]:name: '
+        '--random-name[Randomly name the machine for the tunnel]'
+        '--idle-timeout=[Automatically terminate this supervisor once no client has been connected for this many seconds.]:idle_timeout: '
+        '(-h --help)'{-h,--help}'[Print help]'
+        '--cli-data-dir=[Directory where CLI metadata should be stored]:cli_data_dir:_files -/'
+        '--verbose[Print verbose output (implies --wait)]'
+        '--log=[Log level to use]:level:(trace debug info warn error critical off)'
+      )
+      ;;
+    'agent ps')
+      opts=(
+        '--user-data-dir=[Directory containing the shared agent host registry used for automatic discovery]:user_data_dir:_files -/'
+        '--address=[WebSocket address of a running agent host (e.g. ws://127.0.0.1:1234?tkn=secret).]:address: '
+        '--tunnel=[Connect via a named dev tunnel instead of the local address]:tunnel: '
+        '--json[Output results as JSON instead of a human-readable table]'
+        '(-a --all)'{-a,--all}'[Show all sessions, including idle and archived ones]'
+        '(-h --help)'{-h,--help}'[Print help]'
+        '--cli-data-dir=[Directory where CLI metadata should be stored]:cli_data_dir:_files -/'
+        '--verbose[Print verbose output (implies --wait)]'
+        '--log=[Log level to use]:level:(trace debug info warn error critical off)'
+      )
+      ;;
+    'agent stop')
+      opts=(
+        '--user-data-dir=[Directory containing the shared agent host registry used for automatic discovery]:user_data_dir:_files -/'
+        '--address=[WebSocket address of a running agent host (e.g. ws://127.0.0.1:1234?tkn=secret).]:address: '
+        '--tunnel=[Connect via a named dev tunnel instead of the local address]:tunnel: '
+        '(-h --help)'{-h,--help}'[Print help]'
+        '--cli-data-dir=[Directory where CLI metadata should be stored]:cli_data_dir:_files -/'
+        '--verbose[Print verbose output (implies --wait)]'
+        '--log=[Log level to use]:level:(trace debug info warn error critical off)'
+      )
+      args=(':session: ')
+      ;;
+    'agent kill')
+      opts=(
+        '--user-data-dir=[Directory containing the shared agent host registry used for automatic discovery]:user_data_dir:_files -/'
+        '--instance-id=[Instance ID of the standalone agent host to kill, as shown when multiple are running.]:instance_id: '
+        '(-h --help)'{-h,--help}'[Print help]'
+        '--cli-data-dir=[Directory where CLI metadata should be stored]:cli_data_dir:_files -/'
+        '--verbose[Print verbose output (implies --wait)]'
+        '--log=[Log level to use]:level:(trace debug info warn error critical off)'
+      )
+      ;;
+    'agent logs')
+      opts=(
+        '--user-data-dir=[Directory containing the shared agent host registry used for automatic discovery]:user_data_dir:_files -/'
+        '--address=[WebSocket address of a running agent host (e.g. ws://127.0.0.1:1234?tkn=secret).]:address: '
+        '--tunnel=[Connect via a named dev tunnel instead of the local address]:tunnel: '
+        '(-h --help)'{-h,--help}'[Print help]'
+        '--cli-data-dir=[Directory where CLI metadata should be stored]:cli_data_dir:_files -/'
+        '--verbose[Print verbose output (implies --wait)]'
+        '--log=[Log level to use]:level:(trace debug info warn error critical off)'
+      )
+      args=(':session: ')
+      ;;
+    'agent endpoints')
+      opts=(
+        '--user-data-dir=[Overrides the resolved user data directory used to locate the shared agent host registry.]:user_data_dir:_files -/'
+        '(-h --help)'{-h,--help}'[Print help]'
+        '--cli-data-dir=[Directory where CLI metadata should be stored]:cli_data_dir:_files -/'
+        '--verbose[Print verbose output (implies --wait)]'
+        '--log=[Log level to use]:level:(trace debug info warn error critical off)'
+      )
+      ;;
+    'tunnel')
+      subs=(
+        'prune:Delete all servers which are currently not running'
+        'kill:Stops any running tunnel on the system'
+        'restart:Restarts any running tunnel on the system'
+        'status:Gets whether there is a tunnel running on the current machine'
+        'rename:Rename the name of this machine associated with port forwarding service'
+        'unregister:Remove this machine'\''s association with the port forwarding service'
+        'user:'
+        'service:(Preview) Manages the tunnel when installed as a system service,'
+        'help:Print this message or the help of the given subcommand(s)'
+      )
+      opts=(
+        '--install-extension=[Requests that extensions be preloaded and installed on connecting servers]:install_extension: '
+        '--server-data-dir=[Specifies the directory that server data is kept in]:server_data_dir:_files -/'
+        '--extensions-dir=[Set the root path for extensions]:extensions_dir:_files -/'
+        '--reconnection-grace-time=[Reconnection grace time in seconds. Defaults to 10800 (3 hours)]:reconnection_grace_time: '
+        '(-h --help)'{-h,--help}'[Print help]'
+        '--random-name[Randomly name machine for port forwarding service]'
+        '--no-sleep[Prevents the machine going to sleep while this command runs]'
+        '--name=[Sets the machine name for port forwarding service]:name: '
+        '--accept-server-license-terms[If set, the user accepts the server license terms and the server will be started without a user prompt]'
+        '--cli-data-dir=[Directory where CLI metadata should be stored]:cli_data_dir:_files -/'
+        '--verbose[Print verbose output (implies --wait)]'
+        '--log=[Log level to use]:level:(trace debug info warn error critical off)'
+      )
+      args=(': :->command')
+      ;;
+    'tunnel prune')
+      opts=(
+        '(-h --help)'{-h,--help}'[Print help]'
+        '--cli-data-dir=[Directory where CLI metadata should be stored]:cli_data_dir:_files -/'
+        '--verbose[Print verbose output (implies --wait)]'
+        '--log=[Log level to use]:level:(trace debug info warn error critical off)'
+      )
+      ;;
+    'tunnel kill')
+      opts=(
+        '(-h --help)'{-h,--help}'[Print help]'
+        '--cli-data-dir=[Directory where CLI metadata should be stored]:cli_data_dir:_files -/'
+        '--verbose[Print verbose output (implies --wait)]'
+        '--log=[Log level to use]:level:(trace debug info warn error critical off)'
+      )
+      ;;
+    'tunnel restart')
+      opts=(
+        '(-h --help)'{-h,--help}'[Print help]'
+        '--cli-data-dir=[Directory where CLI metadata should be stored]:cli_data_dir:_files -/'
+        '--verbose[Print verbose output (implies --wait)]'
+        '--log=[Log level to use]:level:(trace debug info warn error critical off)'
+      )
+      ;;
+    'tunnel status')
+      opts=(
+        '(-h --help)'{-h,--help}'[Print help]'
+        '--cli-data-dir=[Directory where CLI metadata should be stored]:cli_data_dir:_files -/'
+        '--verbose[Print verbose output (implies --wait)]'
+        '--log=[Log level to use]:level:(trace debug info warn error critical off)'
+      )
+      ;;
+    'tunnel rename')
+      opts=(
+        '(-h --help)'{-h,--help}'[Print help]'
+        '--cli-data-dir=[Directory where CLI metadata should be stored]:cli_data_dir:_files -/'
+        '--verbose[Print verbose output (implies --wait)]'
+        '--log=[Log level to use]:level:(trace debug info warn error critical off)'
+      )
+      args=(':name: ')
+      ;;
+    'tunnel unregister')
+      opts=(
+        '(-h --help)'{-h,--help}'[Print help]'
+        '--cli-data-dir=[Directory where CLI metadata should be stored]:cli_data_dir:_files -/'
+        '--verbose[Print verbose output (implies --wait)]'
+        '--log=[Log level to use]:level:(trace debug info warn error critical off)'
+      )
+      ;;
+    'tunnel user')
+      subs=(
+        'login:Log in to port forwarding service'
+        'logout:Log out of port forwarding service'
+        'show:Show the account that'\''s logged into port forwarding service'
+        'help:Print this message or the help of the given subcommand(s)'
+      )
+      opts=(
+        '(-h --help)'{-h,--help}'[Print help]'
+        '--cli-data-dir=[Directory where CLI metadata should be stored]:cli_data_dir:_files -/'
+        '--verbose[Print verbose output (implies --wait)]'
+        '--log=[Log level to use]:level:(trace debug info warn error critical off)'
+      )
+      args=(': :->command')
+      ;;
+    'tunnel user login')
+      opts=(
+        '--access-token=[An access token to store for authentication]:access_token: '
+        '--refresh-token=[An access token to store for authentication]:refresh_token: '
+        '--provider=[The auth provider to use. If not provided, a prompt will be shown]:provider:(microsoft github)'
+        '(-h --help)'{-h,--help}'[Print help]'
+        '--cli-data-dir=[Directory where CLI metadata should be stored]:cli_data_dir:_files -/'
+        '--verbose[Print verbose output (implies --wait)]'
+        '--log=[Log level to use]:level:(trace debug info warn error critical off)'
+      )
+      ;;
+    'tunnel user logout')
+      opts=(
+        '(-h --help)'{-h,--help}'[Print help]'
+        '--cli-data-dir=[Directory where CLI metadata should be stored]:cli_data_dir:_files -/'
+        '--verbose[Print verbose output (implies --wait)]'
+        '--log=[Log level to use]:level:(trace debug info warn error critical off)'
+      )
+      ;;
+    'tunnel user show')
+      opts=(
+        '(-h --help)'{-h,--help}'[Print help]'
+        '--cli-data-dir=[Directory where CLI metadata should be stored]:cli_data_dir:_files -/'
+        '--verbose[Print verbose output (implies --wait)]'
+        '--log=[Log level to use]:level:(trace debug info warn error critical off)'
+      )
+      ;;
+    'tunnel service')
+      subs=(
+        'install:Installs or re-installs the tunnel service on the machine'
+        'uninstall:Uninstalls and stops the tunnel service'
+        'log:Shows logs for the running service'
+        'help:Print this message or the help of the given subcommand(s)'
+      )
+      opts=(
+        '(-h --help)'{-h,--help}'[Print help]'
+        '--cli-data-dir=[Directory where CLI metadata should be stored]:cli_data_dir:_files -/'
+        '--verbose[Print verbose output (implies --wait)]'
+        '--log=[Log level to use]:level:(trace debug info warn error critical off)'
+      )
+      args=(': :->command')
+      ;;
+    'tunnel service install')
+      opts=(
+        '--accept-server-license-terms[If set, the user accepts the server license terms and the server will be started without a user prompt]'
+        '--name=[Sets the machine name for port forwarding service]:name: '
+        '(-h --help)'{-h,--help}'[Print help]'
+        '--cli-data-dir=[Directory where CLI metadata should be stored]:cli_data_dir:_files -/'
+        '--verbose[Print verbose output (implies --wait)]'
+        '--log=[Log level to use]:level:(trace debug info warn error critical off)'
+      )
+      ;;
+    'tunnel service uninstall')
+      opts=(
+        '(-h --help)'{-h,--help}'[Print help]'
+        '--cli-data-dir=[Directory where CLI metadata should be stored]:cli_data_dir:_files -/'
+        '--verbose[Print verbose output (implies --wait)]'
+        '--log=[Log level to use]:level:(trace debug info warn error critical off)'
+      )
+      ;;
+    'tunnel service log')
+      opts=(
+        '(-h --help)'{-h,--help}'[Print help]'
+        '--cli-data-dir=[Directory where CLI metadata should be stored]:cli_data_dir:_files -/'
+        '--verbose[Print verbose output (implies --wait)]'
+        '--log=[Log level to use]:level:(trace debug info warn error critical off)'
+      )
+      ;;
+  esac
+}
+
+_code_extensions() {
+  local -a extensions
+  extensions=(${(f)"$(_call_program extensions code --list-extensions 2>/dev/null)"})
+  _wanted extensions expl 'installed extension' compadd -a extensions
+}
+
+_code_load() {
+  local spec flag
+  _code_node "$node"
+  value_flags=()
+  for spec in $opts; do
+    spec=${spec#\(*\)}
+    flag=${${spec#\*}%%[\[:]*}
+    [[ $flag == *= ]] && value_flags+=(${flag%=})
+  done
+}
+
+_code() {
+  local curcontext=$curcontext state state_descr line node word
+  local -a subs opts args value_flags expl
+  local -A opt_args
+  local -i i=2 start=1 positional=0 ret=1
+
+  _code_load
+  while (( i < CURRENT )); do
+    word=$words[i]
+    if [[ $word == -- ]]; then
+      break
+    elif [[ $word == -?* ]]; then
+      [[ $word != *=* ]] && (( $value_flags[(Ie)$word] )) && (( i++ ))
+    elif (( ! positional )); then
+      if (( $subs[(I)${(b)word}:*] )); then
+        node="${node:+$node }$word"
+        start=$i
+        _code_load
+      else
+        positional=1
+      fi
+    fi
+    (( i++ ))
+  done
+
+  words=($words[1] "${(@)words[start+1,-1]}")
+  (( CURRENT -= start - 1 ))
+
+  _arguments -S -C : $opts $args && ret=0
+  if [[ $state == command ]]; then
+    if (( ! positional )); then
+      _describe -t commands 'code command' subs && ret=0
+    fi
+    if [[ -z $node ]]; then
+      _wanted files expl 'file or folder' _path_files && ret=0
+    fi
+  fi
+  return ret
+}
+
+_code "$@"
