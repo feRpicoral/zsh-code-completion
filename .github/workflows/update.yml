@@ -1,0 +1,72 @@
+name: Update completions
+
+on:
+  schedule:
+    - cron: "0 12 * * *"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Visual Studio Code version to generate from
+        type: string
+        default: latest
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: macos-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+
+      - name: Regenerate from Visual Studio Code
+        env:
+          VERSION: ${{ inputs.version || 'latest' }}
+        run: |
+          launcher="$(./scripts/download-vscode.sh "$VERSION" "$RUNNER_TEMP/vscode")"
+          ./scripts/update.sh "$launcher"
+
+      - name: Check for changes
+        id: changes
+        run: |
+          if git diff --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "version=$(cat code-version)" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Pull requests opened with GITHUB_TOKEN do not trigger other workflows, so the tests
+      # have to run here.
+      - name: Run completion tests
+        if: steps.changes.outputs.changed == 'true'
+        run: ./scripts/test.zsh
+
+      - name: Open pull request
+        if: steps.changes.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.changes.outputs.version }}
+        run: |
+          branch="update/code-$VERSION"
+          if git ls-remote --exit-code --heads origin "$branch" > /dev/null; then
+            echo "A pull request branch for Visual Studio Code $VERSION already exists"
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add _code code-version
+          git commit -m "feat: update completions for vscode $VERSION"
+          git push origin "$branch"
+
+          gh pr create \
+            --title "feat: update completions for vscode $VERSION" \
+            --body "Regenerated \`_code\` from the help output of Visual Studio Code $VERSION."

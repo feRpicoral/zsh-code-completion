@@ -1,0 +1,42 @@
+name: Verify
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install zsh
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y zsh
+
+      - name: Run completion tests
+        run: ./scripts/test.zsh
+
+  reproducible:
+    runs-on: macos-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+
+      - name: Regenerate from the pinned Visual Studio Code version
+        run: |
+          launcher="$(./scripts/download-vscode.sh "$(cat code-version)" "$RUNNER_TEMP/vscode")"
+          ./scripts/update.sh "$launcher"
+
+      - name: Fail if _code differs from the generator output
+        run: git diff --exit-code
