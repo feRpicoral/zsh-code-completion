@@ -1,0 +1,44 @@
+#compdef code-sweep
+
+# Completes `-` under every command path in _code and reports each path whose offered options
+# differ from the ones that path declares.
+
+local line command_path spec offered declared
+local -a paths subs opts args expected report
+
+for line in "${(@f)$(<$CODE_COMPLETION_DIR/_code)}"; do
+  [[ $line == "    '"*"')" ]] && paths+=("${${line#    \'}%\'\)}")
+done
+
+# The helper functions only exist once _code has run.
+words=(code -)
+CURRENT=2
+PREFIX=-
+_code
+
+for command_path in $paths; do
+  words=(code ${=command_path} -)
+  CURRENT=$#words
+  PREFIX=-
+  code_test_output=()
+
+  _code 2>> $CODE_TEST_TMP/sweep-stderr
+
+  _code_node "$command_path"
+  expected=()
+  for spec in $opts; do
+    spec=${spec#\(*\)}
+    expected+=(${${${spec#\*}%%[\[:]*}%=})
+  done
+  offered=${(j: :)${(ou)${(M)code_test_output:#-?*}}}
+  declared=${(j: :)${(ou)expected}}
+  if [[ $offered != $declared ]]; then
+    report+=("'$command_path' offered [$offered] but declares [$declared]")
+  fi
+done
+
+if [[ -s $CODE_TEST_TMP/sweep-stderr ]]; then
+  report+=("completion wrote to stderr: $(<$CODE_TEST_TMP/sweep-stderr)")
+fi
+code_test_output=("swept $#paths command paths" $report)
+return 0
