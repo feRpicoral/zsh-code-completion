@@ -1,6 +1,6 @@
 #compdef code
 
-# Generated from the help output of Visual Studio Code 1.140.0.
+# Generated from the help output of Visual Studio Code 1.142.0.
 
 _code_node() {
   subs=() opts=() args=()
@@ -20,7 +20,7 @@ _code_node() {
         '(-g --goto)'{-g=,--goto=}'[Open a file at the path on the specified line and character position.]:file\:line[\:character]:_files'
         '(-n --new-window)'{-n,--new-window}'[Force to open a new window.]'
         '(-r --reuse-window)'{-r,--reuse-window}'[Force to open a file or folder in an already opened window.]'
-        '--agents[Opens the agents window.]'
+        '--agents[Opens the agents window. If a folder is provided, opens a new session with that folder selected.]'
         '(-w --wait)'{-w,--wait}'[Wait for the files to be closed before returning.]'
         '--locale=[The locale to use (e.g. en-US or zh-TW).]:locale: '
         '--user-data-dir=[Specifies the directory that user data is kept in. Can be used to open multiple distinct instances of Code.]:dir:_files -/'
@@ -89,7 +89,7 @@ _code_node() {
       ;;
     'agent')
       subs=(
-        'host:Start a local agent host server'
+        'host:Start an agent host server, with optional remote access'
         'ps:List active sessions on a running agent host'
         'stop:Cancel the active turn of a session'
         'kill:Forcefully kill the running agent host process tree'
@@ -108,9 +108,12 @@ _code_node() {
         '--replace[Stop any agent host already running on this machine and start a fresh one.]'
         '--new-instance[Always start a brand new standalone supervisor, even if one is already registered and would normally be reused.]'
         '--foreground[Run a newly started agent host supervisor in the foreground instead of detaching it, keeping its logs attached to this...]'
-        '--tunnel[Expose the agent host over a dev tunnel]'
-        '--name=[Sets the machine name for the tunnel]:name: '
+        '--tunnel[Alias for `code tunnel`: expose remote editor and agent host access]'
+        '--github-environment[Register this agent host as a GitHub environment. Runs in the foreground]'
+        '--github-environment-root=[Grant access to a project directory. Repeat for multiple projects. Defaults to the current directory]:github_environment_root: '
+        '--name=[Sets the machine name for the tunnel or GitHub environment]:name: '
         '--random-name[Randomly name the machine for the tunnel]'
+        '--accept-server-license-terms[Accept the server license terms when starting a tunnel or GitHub environment]'
         '--idle-timeout=[Automatically terminate this supervisor once no client has been connected for this many seconds.]:idle_timeout: '
         '(-h --help)'{-h,--help}'[Print help]'
         '--cli-data-dir=[Directory where CLI metadata should be stored]:cli_data_dir:_files -/'
@@ -131,9 +134,12 @@ _code_node() {
         '--replace[Stop any agent host already running on this machine and start a fresh one.]'
         '--new-instance[Always start a brand new standalone supervisor, even if one is already registered and would normally be reused.]'
         '--foreground[Run a newly started agent host supervisor in the foreground instead of detaching it, keeping its logs attached to this...]'
-        '--tunnel[Expose the agent host over a dev tunnel]'
-        '--name=[Sets the machine name for the tunnel]:name: '
+        '--tunnel[Alias for `code tunnel`: expose remote editor and agent host access]'
+        '--github-environment[Register this agent host as a GitHub environment. Runs in the foreground]'
+        '--github-environment-root=[Grant access to a project directory. Repeat for multiple projects. Defaults to the current directory]:github_environment_root: '
+        '--name=[Sets the machine name for the tunnel or GitHub environment]:name: '
         '--random-name[Randomly name the machine for the tunnel]'
+        '--accept-server-license-terms[Accept the server license terms when starting a tunnel or GitHub environment]'
         '--idle-timeout=[Automatically terminate this supervisor once no client has been connected for this many seconds.]:idle_timeout: '
         '(-h --help)'{-h,--help}'[Print help]'
         '--cli-data-dir=[Directory where CLI metadata should be stored]:cli_data_dir:_files -/'
